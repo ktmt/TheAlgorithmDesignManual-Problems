@@ -8,3 +8,18 @@ HuyDX:
 - DFS partitions the edges of an undirected graph into exactly two classes: *tree_edges* and *back_edges*. *back_edges* are edges which other endpoint is an parent of the vertex being expanded, to form a cycle.
 
 Question:
+
+Solutions
+  - 5.1
+  - 5.3: if exist two differences path bw 2 vertices in a tree, it will form a cycle
+  - 5.5: ?? -> Problem of vertex coloring with low degree. Is NP complete, reference as from page 544. These methods vary in how the next vertex is selected and how it is assigned a color. -> just think about backtracking, maintain an arrays of color array
+     ```
+      int* colorarr[N];
+      ...
+      //traverse by BFS and testing all edge
+      if(color[u] == color[v]) {
+        coloarr[u].pop();
+        backtrack; 
+      }
+     ```
+  - 5.7:
