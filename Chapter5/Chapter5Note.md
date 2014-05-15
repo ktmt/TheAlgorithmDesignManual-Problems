@@ -6,3 +6,11 @@ VietNH:
 HuyDX:
 - While BFS based on parent arrays to solve problems related to path-finding, DFS based on exit_time and entry_time when access a node, to solve problem which needed to know traverse order (such as topology sort,...)
 - DFS partitions the edges of an undirected graph into exactly two classes: *tree_edges* and *back_edges*. *back_edges* are edges which other endpoint is an parent of the vertex being expanded, to form a cycle.
+
+Question:
+- 5.9.1: in the code:
+  ```c++ 
+  if (discovered[y] && parent[x] != y) 
+  ```
+  is that != should be == ??
+
