@@ -8,9 +8,3 @@ HuyDX:
 - DFS partitions the edges of an undirected graph into exactly two classes: *tree_edges* and *back_edges*. *back_edges* are edges which other endpoint is an parent of the vertex being expanded, to form a cycle.
 
 Question:
-- 5.9.1: in the code:
-  ```c++ 
-  if (discovered[y] && parent[x] != y) 
-  ```
-  is that != should be == ??
-
