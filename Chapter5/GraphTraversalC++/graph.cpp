@@ -124,8 +124,20 @@ void graph::process_vertex_early(int v){
 
 void graph::process_edge(int v, int y){
 	cout << "processed edge (" << v << ", " << y << ")\n";
+
+	/* Two coloring */
+	if(color[v]== color[y]){
+		bipartite = false;
+		cout << "Warning: not bipartite due  to (" << v << ", " << y << "\n";
+	}
+	color[y] = complement(color[v]);
 }
 
+int graph::complement(int color){
+	if(color == WHITE) return (BLACK);
+	if(color == BLACK) return (WHITE);
+	return (UNCOLORED);
+}
 void graph::find_path(int start, int end, int parents[]){
 	if((start==end) || (end == -1)){
 		cout << "\n" << start;
@@ -133,5 +145,19 @@ void graph::find_path(int start, int end, int parents[]){
 	else{
 		find_path(start, parents[end], parents);
 		cout << " " << end;
+	}
+}
+
+void graph::twocolor(){
+	for (int i = 1; i<= nvertices; i++){
+		color[i] = UNCOLORED;
+	}
+	bipartite = true;
+	init_search();
+	for(int i = 1; i<= nvertices; i++){
+		if(discovered[i] == false){
+			color[i]= WHITE;
+			bfs(i);
+		}
 	}
 }

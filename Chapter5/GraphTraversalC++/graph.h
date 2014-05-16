@@ -11,6 +11,9 @@
 
 #define MAXV 	1000		/* maximum number of vertices */
 
+#define UNCOLORED 	-1
+#define WHITE 		0
+#define BLACK		1
 
 class edgenode{
 public:
@@ -33,6 +36,10 @@ private:
 	bool discovered[MAXV+1];	/* which vertices have been found */
 	int parent[MAXV+1];			/* discovery relation */
 
+	/* For two color */
+	int color[MAXV+1];
+	bool bipartite;
+
 public:
 	graph();
 	virtual ~graph();
@@ -48,6 +55,10 @@ public:
 	void process_vertex_late(int v);
 	void process_edge(int v, int y);
 	void find_path(int start, int end, int parent[]);	/* application of BFS to find path from one vertex to another */
+
+	/* Two color */
+	void twocolor();
+	int complement(int color);
 };
 
 
