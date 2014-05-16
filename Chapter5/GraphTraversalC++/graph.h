@@ -40,6 +40,11 @@ private:
 	int color[MAXV+1];
 	bool bipartite;
 
+	/* For DFS */
+	int time;
+	bool finished;
+	int entry_time[MAXV+1];
+	int exit_time[MAXV+1];
 public:
 	graph();
 	virtual ~graph();
@@ -59,6 +64,9 @@ public:
 	/* Two color */
 	void twocolor();
 	int complement(int color);
+
+	/* For DFS */
+	void dfs(int start);
 };
 
 

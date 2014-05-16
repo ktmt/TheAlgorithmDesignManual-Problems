@@ -11,5 +11,6 @@ int main(){
 	graph g;
 	int parent[10];
 	g.read_graph(false);
-	g.twocolor();
+	//g.twocolor();
+	g.dfs(1);
 }
