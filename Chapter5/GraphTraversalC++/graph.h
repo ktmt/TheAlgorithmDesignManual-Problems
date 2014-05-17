@@ -9,11 +9,20 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
+#include <stack>
+
 #define MAXV 	1000		/* maximum number of vertices */
 
 #define UNCOLORED 	-1
 #define WHITE 		0
 #define BLACK		1
+
+#define TREE	0
+#define BACK 	1
+#define FORWARD 2
+#define CROSS	3
+
+using namespace std;
 
 class edgenode{
 public:
@@ -45,6 +54,9 @@ private:
 	bool finished;
 	int entry_time[MAXV+1];
 	int exit_time[MAXV+1];
+
+	/* For Topo sorting */
+	stack<int> sorted;
 public:
 	graph();
 	virtual ~graph();
@@ -67,7 +79,14 @@ public:
 
 	/* For DFS */
 	void dfs(int start);
-};
 
+	/* For topo sort */
+	int edge_classification(int x, int y);
+	void topo_sort();
+	void process_vertex_late_topo(int v);
+	void process_edge_topo(int x, int y);
+	void print_stack();
+
+};
 
 #endif /* GRAPH_H_ */

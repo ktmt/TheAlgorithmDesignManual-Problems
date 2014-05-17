@@ -10,7 +10,7 @@
 int main(){
 	graph g;
 	int parent[10];
-	g.read_graph(false);
+	g.read_graph(true);
 	//g.twocolor();
-	g.dfs(1);
+	g.topo_sort();
 }

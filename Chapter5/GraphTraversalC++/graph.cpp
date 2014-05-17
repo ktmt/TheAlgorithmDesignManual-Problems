@@ -177,18 +177,55 @@ void graph::dfs(int v){
 		int y = p->y;
 		if(discovered[y] == false){
 			parent[y] = v;
-			process_edge(v,y);
+			process_edge_topo(v,y);
 			dfs(y);
 		}
 		else if((!processed[y] && parent[v] != y) || (directed)){
-			process_edge(v,y);
+			process_edge_topo(v,y);
 		}
 		if(finished) return;
 		p=p->next;
 	}
 
-	process_vertex_late(v);
+	process_vertex_late_topo(v);
 	time = time + 1;
 	exit_time[v] = time;
 	processed[v] = true;
+}
+
+int graph::edge_classification(int x, int y){
+	if(parent[y] == x) return (TREE);
+	if(discovered[y] && !processed[y]) return (BACK);
+	if(processed[y] && (entry_time[y] > entry_time[x])) return (FORWARD);
+	if(processed[y] && (entry_time[y] < entry_time[x])) return (CROSS);
+	return (TREE);
+}
+
+void graph::process_vertex_late_topo(int v){
+	sorted.push(v);
+}
+
+void graph::process_edge_topo(int x, int y){
+	int c = edge_classification(x,y);
+	if(c == BACK){
+		cout << "Warning: directed cycle found, not a DAG \n";
+	}
+}
+
+void graph::topo_sort(){
+	for(int i = 1; i <= nvertices; i++){
+		if(discovered[i] == false){
+			dfs(i);
+		}
+	}
+	print_stack();
+}
+
+void graph::print_stack(){
+	while(!sorted.empty()){
+		int i = sorted.top();
+		sorted.pop();
+		cout << i << ", ";
+	}
+	cout << "\n";
 }

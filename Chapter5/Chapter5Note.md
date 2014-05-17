@@ -24,3 +24,7 @@ Solutions
       }
      ```
   - 5.7:
+
+  - 5.6 (a) A tree with v as root and n-1 remaining nodes as leaves. 
+        (b) A linked-list-like chain of nodes, starting from v 
+        (c) 
