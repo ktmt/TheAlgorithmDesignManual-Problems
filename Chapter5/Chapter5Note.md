@@ -28,3 +28,28 @@ Solutions
   - 5.6 (a) A tree with v as root and n-1 remaining nodes as leaves. 
         (b) A linked-list-like chain of nodes, starting from v 
         (c) 
+  - 5.8 (a) Convert from an adjacency matrix to adjacency lists 
+            For each row i
+                If M[i,j]=1
+                    Insert a new edge for the list of node i
+            Time complexity: O(n^2)
+        (b) Convert from an adjacency list to an incidence matrix 
+            An incidence matrix M has a row for each vertex and a column for each edge, such that M[i,j]=1 if vertex i is part of edge j, otherwise M[i,j]=0.
+            Algorithm:
+            - Init the matrix M with n rows for n vertices
+            - col = 0
+            - For each row i in adjacency list
+                For each edge (to k) in this list {
+                  M[i, col] = 1
+                  M[k, col] = 1
+                  Remove this edge from the list of vertex k 
+                  col ++ 
+                }
+            Time complexity: O(mn)
+        (c) Convert from an incident matrix to adjacency lists 
+            - Init the adjacency list A with n rows for n vertices 
+            - For j from 1 to number of edges  
+                    Find i, k such that M[i,j] = M[k,j] = 1
+                    Add edge (i,k) to adjacency list of vertex i
+                    Add edge (k,i) to adjacency list of vertex k
+           Time complexity O(m)
