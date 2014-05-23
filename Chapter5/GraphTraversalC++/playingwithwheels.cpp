@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
+#include <cstdlib>
 
 #define MAXVERTICES 10000
 
