@@ -6,6 +6,7 @@
  */
 
 #include "graph.h"
+#include "set_union_custom.h"
 #include <iostream>
 #include <queue>
 #include <limits>
@@ -298,6 +299,40 @@ void graph::prim (int start){
 				dist = distance[i];
 				v = i;
 			}
+		}
+	}
+}
+
+bool weight_compare(edge_pair e1, edge_pair e2){
+	return e1.weight < e2.weight;
+}
+void graph::kruskal(){
+	set_union_custom s;			/* set union data structure */
+	vector<edge_pair> e;	/* vector of edges */
+
+	s.set_union_init(nvertices);
+
+	cout << "Minimum spanning tree by Kruskal's algorithm: \n";
+	for(int i = 1; i<=nvertices; i++){
+		edgenode *p = edges[i];
+		while(p!=NULL){
+			if(i>p->y) {
+				p=p->next;
+				continue;
+			}
+			edge_pair newe(i, p->y, p->weight);
+			e.push_back(newe);
+			cout << "Added: (" << i << "," << p-> y << "," << p->weight << ")\n";
+			p = p->next;
+		}
+	}
+
+	sort(e.begin(), e.end(), weight_compare);
+
+	for(vector<edge_pair>::iterator it = e.begin(); it !=e.end(); it++){
+		if(!s.same_component(it->x, it->y)){
+			cout << "edge (" << it->x << "," << it->y << ") in MST\n";
+			s.union_sets( it->x, it->y);
 		}
 	}
 }

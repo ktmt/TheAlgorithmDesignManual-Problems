@@ -32,6 +32,17 @@ public:
 
 };
 
+class edge_pair{
+public:
+	int x, y;
+	int weight;
+	edge_pair(int _x, int _y, int _weight){
+		x = _x;
+		y = _y;
+		weight = _weight;
+	}
+};
+
 class graph {
 private:
 	edgenode *edges[MAXV+1]; 	/* adjacency info */
@@ -93,6 +104,9 @@ public:
 
 	/* Prim's algorithm for spanning tree */
 	void prim(int start);
+
+	/* Kruskal's algorithm for spanning tree */
+	void kruskal();
 };
 
 #endif /* GRAPH_H_ */

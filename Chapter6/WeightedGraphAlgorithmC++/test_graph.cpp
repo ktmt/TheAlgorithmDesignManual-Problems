@@ -11,4 +11,5 @@ int main(){
 	graph g;
 	g.read_graph_weight(false);
 	g.prim(1);
+	g.kruskal();
 }
