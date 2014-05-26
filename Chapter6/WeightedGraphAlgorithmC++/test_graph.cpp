@@ -12,4 +12,5 @@ int main(){
 	g.read_graph_weight(false);
 	g.prim(1);
 	g.kruskal();
+	g.dijkstra(1);
 }

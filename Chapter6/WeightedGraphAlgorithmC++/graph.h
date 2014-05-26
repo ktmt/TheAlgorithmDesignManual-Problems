@@ -107,6 +107,9 @@ public:
 
 	/* Kruskal's algorithm for spanning tree */
 	void kruskal();
+
+	/* Dijkstra's algorithm for finding shortest path */
+	void dijkstra(int start);
 };
 
 #endif /* GRAPH_H_ */

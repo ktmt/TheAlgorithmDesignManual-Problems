@@ -66,7 +66,7 @@ void graph::insert_edge_weight(int x, int y, int weight, bool directed){
 	degree[x] ++;
 
 	if(directed == false){
-		insert_edge(y, x, true);
+		insert_edge_weight(y, x, weight, true);
 	}
 	else{
 		nedges ++;
@@ -333,6 +333,47 @@ void graph::kruskal(){
 		if(!s.same_component(it->x, it->y)){
 			cout << "edge (" << it->x << "," << it->y << ") in MST\n";
 			s.union_sets( it->x, it->y);
+		}
+	}
+}
+
+void graph::dijkstra(int start){
+	edgenode *p;		/* temporary pointer */
+	bool intree[MAXV+1];	/* is the vertex in the tree yet? */
+	int distance[MAXV+1];	/* distance vertex is from start */
+	int v;					/* current vertex to process */
+	int w;					/* candidate next vertex */
+	int weight;				/* edge weight */
+	int dist;				/* best current distance from start */
+	for (int i = 1; i <= nvertices; i++){
+		intree[i] = false;
+		distance[i] = std::numeric_limits<int>::max();
+		parent[i] = -1;
+	}
+	distance[start] = 0;
+	v = start;
+	cout << "Shortest path by Dijkstra's algorithm: \n";
+	while(intree[v] == false){
+		cout << "distance[" << v << "] = "<< distance[v] << "\n";
+		intree[v] = true;
+		p = edges[v];
+		while(p!=NULL){
+			w = p->y;
+			weight = p->weight;
+			if(distance[w] > (distance[v] + weight)){
+				distance[w]= distance[v] + weight;
+				parent[w] = v;
+			}
+			p = p->next;
+		}
+
+		v = 1;
+		dist = std::numeric_limits<int>::max();
+		for(int i = 1; i <= nvertices; i++){
+			if((intree[i] == false) && (dist > distance[i])){
+				dist = distance[i];
+				v = i;
+			}
 		}
 	}
 }
