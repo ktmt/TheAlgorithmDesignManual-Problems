@@ -26,6 +26,7 @@ void flow_graph::init_graph (bool isDirected){
 	nvertices = 0;
 	nedges = 0;
 	directed = isDirected;
+	maxflow = 0;
 
 	for(int i = 1; i<= MAXV; i++){
 		degree[i] = 0;
@@ -40,6 +41,8 @@ void flow_graph::insert_edge_weight(int x, int y, int weight, bool directed){
 	p = (flowedgenode *)malloc(sizeof(flowedgenode));
 
 	p->capacity = weight;
+	p->flow = 0;
+	p->residual = weight;
 	p->v = y;
 	p->next = edges[x];
 
@@ -54,15 +57,14 @@ void flow_graph::insert_edge_weight(int x, int y, int weight, bool directed){
 	}
 }
 
-
-void flow_graph::read_graph_weight(bool directed){
-	int x,y, weight;
-	int m; 		/* number of edges */
-	init_graph(directed);
+void flow_graph::add_residual_edges(){
+	int x,y,weight,flow,residual;
+	int m;		/* number of edges */
+	init_graph(false);
 	cin >> nvertices >> m;
-	for (int i = 1; i<=m; i++){
+	for(int i = 1; i<= m; i++){
 		cin >> x >> y >> weight;
-		insert_edge_weight(x,y,weight,directed);
+		insert_edge_weight(x,y,weight,false);
 	}
 }
 
@@ -89,12 +91,17 @@ void flow_graph::netflow(int source, int sink){
 
 	volume = path_volume(source,sink,parent);
 	while(volume > 0){
+		maxflow += volume;
+		cout << "volume: " << volume << "\n";
 		augment_path (source, sink, parent, volume);
 		init_search();
+		bfs(source);
 		volume = path_volume(source,sink, parent);
 
 	}
 }
+
+
 
 bool flow_graph::valid_edge(flowedgenode *e){
 	if(e->residual > 0) return true;
@@ -126,8 +133,12 @@ flowedgenode * flow_graph::find_edge(int x, int y){
 
 void flow_graph::augment_path(int start, int end, int parents[], int volume){
 	flowedgenode *e;				/* edge in question */
-	if(start == end) return;
+	if(start == end){
+		cout << start << "\n";
+		return;
+	}
 
+	cout << end  <<"<-";
 	e = find_edge(parents[end], end);
 	e->flow += volume;
 	e->residual -= volume;
@@ -159,6 +170,10 @@ void flow_graph::bfs(int start){
 		processed[v] = true;
 		p = edges[v];
 		while(p!=NULL){
+			if(!valid_edge(p)){
+				p=p->next;
+				continue;
+			}
 			y = p->v;
 			if((processed[y] == false) || directed ){
 				process_edge(v,y);
@@ -179,15 +194,10 @@ void flow_graph::process_vertex_late(int v){
 }
 
 void flow_graph::process_vertex_early(int v){
-	cout << "processed vertex " << v << "\n";
+	//cout << "processed vertex " << v << "\n";
 }
 
 void flow_graph::process_edge(int v, int y){
-	cout << "processed edge (" << v << ", " << y << ")\n";
-
-}
-
-void flow_graph::add_residual_edges(){
-	// TODO: add residual edges. See insert weight edges
+	//cout << "processed edge (" << v << ", " << y << ")\n";
 
 }

@@ -32,6 +32,9 @@ class flow_graph{
 	int parent[MAXV+1];			/* discovery relation */
 
 public:
+
+	int maxflow;				/* maxflow */
+
 	flow_graph();
 	virtual ~flow_graph();
 	void init_graph(bool directed);
